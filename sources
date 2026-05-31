@@ -21,20 +21,30 @@ local restoreButton
 local savedWalkSpeed = 16
 local savedJumpPower = 50
 
-local currentSize = UDim2.new(0, 620, 0, 410)
-local currentPosition = UDim2.new(0.5, -310, 0.5, -205)
+local currentSize = UDim2.new(0, 540, 0, 350)
+local currentPosition = UDim2.new(0.5, -270, 0.5, -175)
 
 local gui = Instance.new("ScreenGui")
 gui.Name = "MM2 HUB"
 gui.ResetOnSpawn = false
+gui.IgnoreGuiInset = true
+gui.DisplayOrder = 999999
 gui.ZIndexBehavior = Enum.ZIndexBehavior.Global
-gui.Parent = player:WaitForChild("PlayerGui")
+
+pcall(function()
+	gui.Parent = game:GetService("CoreGui")
+end)
+
+if not gui.Parent then
+	gui.Parent = player:WaitForChild("PlayerGui")
+end
 
 local introFrame = Instance.new("Frame")
 introFrame.Size = UDim2.new(0, 500, 0, 310)
 introFrame.Position = UDim2.new(0.5, -250, 0.5, -155)
 introFrame.BackgroundColor3 = MATTE_BLACK
 introFrame.BorderSizePixel = 0
+introFrame.ZIndex = 999999
 introFrame.Parent = gui
 
 Instance.new("UICorner", introFrame).CornerRadius = UDim.new(0, 22)
@@ -54,6 +64,7 @@ welcomeLabel.Font = FONT_TITLE
 welcomeLabel.TextSize = 46
 welcomeLabel.TextColor3 = PURPLE
 welcomeLabel.TextWrapped = true
+welcomeLabel.ZIndex = 999999
 welcomeLabel.Parent = introFrame
 
 local creditIntro = Instance.new("TextLabel")
@@ -66,6 +77,7 @@ creditIntro.Font = FONT_TITLE
 creditIntro.TextSize = 22
 creditIntro.TextColor3 = Color3.fromRGB(210, 190, 255)
 creditIntro.TextTransparency = 1
+creditIntro.ZIndex = 999999
 creditIntro.Parent = introFrame
 
 local questionLabel = Instance.new("TextLabel")
@@ -77,6 +89,7 @@ questionLabel.Font = FONT_BOLD
 questionLabel.TextSize = 19
 questionLabel.TextColor3 = Color3.fromRGB(245, 245, 245)
 questionLabel.TextTransparency = 1
+questionLabel.ZIndex = 999999
 questionLabel.Parent = introFrame
 
 local choiceHolder = Instance.new("Frame")
@@ -84,6 +97,7 @@ choiceHolder.Size = UDim2.new(1, -50, 0, 120)
 choiceHolder.Position = UDim2.new(0, 25, 0, 165)
 choiceHolder.BackgroundTransparency = 1
 choiceHolder.Visible = false
+choiceHolder.ZIndex = 999999
 choiceHolder.Parent = introFrame
 
 local choiceLayout = Instance.new("UIListLayout")
@@ -102,6 +116,7 @@ local function createChoiceButton(text, emoji)
 	button.TextSize = 23
 	button.TextColor3 = Color3.fromRGB(255, 255, 255)
 	button.AutoButtonColor = false
+	button.ZIndex = 999999
 	button.Parent = choiceHolder
 
 	Instance.new("UICorner", button).CornerRadius = UDim.new(0, 16)
@@ -124,13 +139,14 @@ main.BackgroundColor3 = MATTE_BLACK
 main.BorderSizePixel = 0
 main.Active = true
 main.Visible = false
+main.ZIndex = 999999
 main.Parent = gui
 
-Instance.new("UICorner", main).CornerRadius = UDim.new(0, 20)
+Instance.new("UICorner", main).CornerRadius = UDim.new(0, 18)
 
 local outerGlow = Instance.new("UIStroke")
 outerGlow.Color = Color3.fromRGB(190, 90, 255)
-outerGlow.Thickness = 6
+outerGlow.Thickness = 5
 outerGlow.Transparency = 0.78
 outerGlow.Parent = main
 
@@ -140,128 +156,136 @@ mainStroke.Thickness = 2
 mainStroke.Parent = main
 
 local top = Instance.new("Frame")
-top.Size = UDim2.new(1, 0, 0, 58)
+top.Size = UDim2.new(1, 0, 0, 48)
 top.BackgroundColor3 = Color3.fromRGB(23, 12, 38)
 top.BorderSizePixel = 0
 top.Active = true
+top.ZIndex = 999999
 top.Parent = main
 
-Instance.new("UICorner", top).CornerRadius = UDim.new(0, 20)
+Instance.new("UICorner", top).CornerRadius = UDim.new(0, 18)
 
 local title = Instance.new("TextLabel")
-title.Size = UDim2.new(0, 250, 1, 0)
-title.Position = UDim2.new(0, 20, 0, 0)
+title.Size = UDim2.new(0, 220, 1, 0)
+title.Position = UDim2.new(0, 16, 0, 0)
 title.BackgroundTransparency = 1
 title.Text = "MM2 HUB"
 title.Font = FONT_TITLE
-title.TextSize = 26
+title.TextSize = 22
 title.TextColor3 = Color3.fromRGB(190, 95, 255)
 title.TextXAlignment = Enum.TextXAlignment.Left
+title.ZIndex = 999999
 title.Parent = top
 
 task.spawn(function()
 	while title.Parent do
 		TweenService:Create(title, TweenInfo.new(1.2), {
-			Position = UDim2.new(0, 30, 0, 0)
+			Position = UDim2.new(0, 24, 0, 0)
 		}):Play()
-
 		task.wait(1.2)
-
 		TweenService:Create(title, TweenInfo.new(1.2), {
-			Position = UDim2.new(0, 20, 0, 0)
+			Position = UDim2.new(0, 16, 0, 0)
 		}):Play()
-
 		task.wait(1.2)
 	end
 end)
 
 local version = Instance.new("TextLabel")
-version.Size = UDim2.new(0, 75, 0, 28)
-version.Position = UDim2.new(1, -90, 0.5, -14)
+version.Size = UDim2.new(0, 65, 0, 24)
+version.Position = UDim2.new(1, -78, 0.5, -12)
 version.BackgroundColor3 = PURPLE
 version.Text = "v1.0"
 version.Font = FONT_BOLD
-version.TextSize = 12
+version.TextSize = 11
 version.TextColor3 = Color3.fromRGB(255, 255, 255)
+version.ZIndex = 999999
 version.Parent = top
 
 Instance.new("UICorner", version).CornerRadius = UDim.new(1, 0)
 
 local creditMain = Instance.new("TextLabel")
-creditMain.Size = UDim2.new(0, 310, 0, 22)
-creditMain.Position = UDim2.new(0.5, -155, 1, -27)
+creditMain.Size = UDim2.new(0, 280, 0, 20)
+creditMain.Position = UDim2.new(0.5, -140, 1, -23)
 creditMain.BackgroundTransparency = 1
 creditMain.Text = "Made by eternalscriptz on TikTok"
 creditMain.Font = FONT_BOLD
-creditMain.TextSize = 14
+creditMain.TextSize = 13
 creditMain.TextColor3 = Color3.fromRGB(200, 180, 255)
+creditMain.ZIndex = 999999
 creditMain.Parent = main
 
 local sidebar = Instance.new("Frame")
-sidebar.Size = UDim2.new(0, 155, 1, -58)
-sidebar.Position = UDim2.new(0, 0, 0, 58)
+sidebar.Size = UDim2.new(0, 135, 1, -48)
+sidebar.Position = UDim2.new(0, 0, 0, 48)
 sidebar.BackgroundColor3 = Color3.fromRGB(5, 5, 8)
 sidebar.BorderSizePixel = 0
+sidebar.ZIndex = 999999
 sidebar.Parent = main
 
 local content = Instance.new("Frame")
-content.Size = UDim2.new(1, -190, 1, -90)
-content.Position = UDim2.new(0, 175, 0, 78)
+content.Size = UDim2.new(1, -160, 1, -75)
+content.Position = UDim2.new(0, 150, 0, 65)
 content.BackgroundTransparency = 1
 content.ClipsDescendants = true
+content.ZIndex = 999999
 content.Parent = main
 
 local pageTitle = Instance.new("TextLabel")
-pageTitle.Size = UDim2.new(1, 0, 0, 32)
+pageTitle.Size = UDim2.new(1, 0, 0, 28)
 pageTitle.BackgroundTransparency = 1
 pageTitle.Text = "Main"
 pageTitle.Font = FONT_BOLD
-pageTitle.TextSize = 23
+pageTitle.TextSize = 20
 pageTitle.TextColor3 = Color3.fromRGB(255, 255, 255)
 pageTitle.TextXAlignment = Enum.TextXAlignment.Left
+pageTitle.ZIndex = 999999
 pageTitle.Parent = content
 
 local buttonHolder = Instance.new("Frame")
-buttonHolder.Size = UDim2.new(1, 0, 1, -45)
-buttonHolder.Position = UDim2.new(0, 0, 0, 48)
+buttonHolder.Size = UDim2.new(1, 0, 1, -40)
+buttonHolder.Position = UDim2.new(0, 0, 0, 40)
 buttonHolder.BackgroundTransparency = 1
+buttonHolder.ZIndex = 999999
 buttonHolder.Parent = content
 
 local list = Instance.new("UIListLayout")
-list.Padding = UDim.new(0, 10)
+list.Padding = UDim.new(0, 8)
 list.Parent = buttonHolder
 
 local tabHolder = Instance.new("Frame")
-tabHolder.Size = UDim2.new(1, -20, 0, 230)
-tabHolder.Position = UDim2.new(0, 10, 0, 14)
+tabHolder.Size = UDim2.new(1, -16, 0, 210)
+tabHolder.Position = UDim2.new(0, 8, 0, 12)
 tabHolder.BackgroundTransparency = 1
+tabHolder.ZIndex = 999999
 tabHolder.Parent = sidebar
 
 local tabLayout = Instance.new("UIListLayout")
-tabLayout.Padding = UDim.new(0, 9)
+tabLayout.Padding = UDim.new(0, 7)
 tabLayout.Parent = tabHolder
 
 local userBox = Instance.new("Frame")
-userBox.Size = UDim2.new(1, -20, 0, 70)
-userBox.Position = UDim2.new(0, 10, 1, -82)
+userBox.Size = UDim2.new(1, -16, 0, 62)
+userBox.Position = UDim2.new(0, 8, 1, -72)
 userBox.BackgroundColor3 = PANEL
 userBox.BorderSizePixel = 0
+userBox.ZIndex = 999999
 userBox.Parent = sidebar
 
-Instance.new("UICorner", userBox).CornerRadius = UDim.new(0, 12)
+Instance.new("UICorner", userBox).CornerRadius = UDim.new(0, 10)
 
 local avatar = Instance.new("ImageLabel")
-avatar.Size = UDim2.new(0, 42, 0, 42)
-avatar.Position = UDim2.new(0, 8, 0.5, -21)
+avatar.Size = UDim2.new(0, 36, 0, 36)
+avatar.Position = UDim2.new(0, 7, 0.5, -18)
 avatar.BackgroundTransparency = 1
 avatar.Image = "rbxthumb://type=AvatarHeadShot&id=" .. player.UserId .. "&w=150&h=150"
+avatar.ZIndex = 999999
 avatar.Parent = userBox
 
 Instance.new("UICorner", avatar).CornerRadius = UDim.new(1, 0)
 
 local display = Instance.new("TextLabel")
-display.Size = UDim2.new(1, -60, 0, 20)
-display.Position = UDim2.new(0, 56, 0, 15)
+display.Size = UDim2.new(1, -52, 0, 18)
+display.Position = UDim2.new(0, 49, 0, 13)
 display.BackgroundTransparency = 1
 display.Text = player.DisplayName
 display.TextScaled = true
@@ -269,11 +293,12 @@ display.Font = FONT_BOLD
 display.TextColor3 = Color3.fromRGB(255, 255, 255)
 display.TextXAlignment = Enum.TextXAlignment.Left
 display.TextTruncate = Enum.TextTruncate.AtEnd
+display.ZIndex = 999999
 display.Parent = userBox
 
 local username = Instance.new("TextLabel")
-username.Size = UDim2.new(1, -60, 0, 16)
-username.Position = UDim2.new(0, 56, 0, 37)
+username.Size = UDim2.new(1, -52, 0, 14)
+username.Position = UDim2.new(0, 49, 0, 34)
 username.BackgroundTransparency = 1
 username.Text = "@" .. player.Name
 username.TextScaled = true
@@ -281,6 +306,7 @@ username.Font = FONT
 username.TextColor3 = Color3.fromRGB(180, 170, 200)
 username.TextXAlignment = Enum.TextXAlignment.Left
 username.TextTruncate = Enum.TextTruncate.AtEnd
+username.ZIndex = 999999
 username.Parent = userBox
 
 local function clearContent()
@@ -335,16 +361,17 @@ end
 
 local function makeButton(text, height)
 	local btn = Instance.new("TextButton")
-	btn.Size = UDim2.new(1, 0, 0, height or 52)
+	btn.Size = UDim2.new(1, 0, 0, height or 44)
 	btn.BackgroundColor3 = PANEL
 	btn.Text = text
 	btn.Font = FONT_BOLD
-	btn.TextSize = 13
+	btn.TextSize = 12
 	btn.TextColor3 = Color3.fromRGB(240, 235, 255)
 	btn.AutoButtonColor = false
+	btn.ZIndex = 999999
 	btn.Parent = buttonHolder
 
-	Instance.new("UICorner", btn).CornerRadius = UDim.new(0, 14)
+	Instance.new("UICorner", btn).CornerRadius = UDim.new(0, 12)
 
 	local s = Instance.new("UIStroke")
 	s.Color = Color3.fromRGB(100, 45, 190)
@@ -357,42 +384,46 @@ end
 
 local function createSlider(titleText, defaultValue, callback)
 	local row = Instance.new("Frame")
-	row.Size = UDim2.new(1, 0, 0, 82)
+	row.Size = UDim2.new(1, 0, 0, 70)
 	row.BackgroundColor3 = PANEL
 	row.BorderSizePixel = 0
+	row.ZIndex = 999999
 	row.Parent = buttonHolder
 
-	Instance.new("UICorner", row).CornerRadius = UDim.new(0, 14)
+	Instance.new("UICorner", row).CornerRadius = UDim.new(0, 12)
 
 	local label = Instance.new("TextLabel")
-	label.Size = UDim2.new(0.5, 0, 0, 22)
-	label.Position = UDim2.new(0, 14, 0, 10)
+	label.Size = UDim2.new(0.5, 0, 0, 18)
+	label.Position = UDim2.new(0, 12, 0, 8)
 	label.BackgroundTransparency = 1
 	label.Text = titleText
 	label.Font = FONT_BOLD
-	label.TextSize = 13
+	label.TextSize = 12
 	label.TextColor3 = Color3.fromRGB(255, 255, 255)
 	label.TextXAlignment = Enum.TextXAlignment.Left
+	label.ZIndex = 999999
 	label.Parent = row
 
 	local box = Instance.new("TextBox")
-	box.Size = UDim2.new(0, 60, 0, 26)
-	box.Position = UDim2.new(1, -74, 0, 8)
+	box.Size = UDim2.new(0, 54, 0, 23)
+	box.Position = UDim2.new(1, -65, 0, 7)
 	box.BackgroundColor3 = Color3.fromRGB(12, 10, 18)
 	box.Text = tostring(defaultValue)
 	box.Font = FONT_BOLD
-	box.TextSize = 12
+	box.TextSize = 11
 	box.TextColor3 = Color3.fromRGB(255, 255, 255)
 	box.ClearTextOnFocus = false
+	box.ZIndex = 999999
 	box.Parent = row
 
-	Instance.new("UICorner", box).CornerRadius = UDim.new(0, 9)
+	Instance.new("UICorner", box).CornerRadius = UDim.new(0, 8)
 
 	local bar = Instance.new("Frame")
-	bar.Size = UDim2.new(1, -28, 0, 8)
-	bar.Position = UDim2.new(0, 14, 0, 52)
+	bar.Size = UDim2.new(1, -24, 0, 7)
+	bar.Position = UDim2.new(0, 12, 0, 45)
 	bar.BackgroundColor3 = Color3.fromRGB(35, 25, 55)
 	bar.BorderSizePixel = 0
+	bar.ZIndex = 999999
 	bar.Parent = row
 
 	Instance.new("UICorner", bar).CornerRadius = UDim.new(1, 0)
@@ -401,15 +432,17 @@ local function createSlider(titleText, defaultValue, callback)
 	fill.Size = UDim2.new(defaultValue / 250, 0, 1, 0)
 	fill.BackgroundColor3 = PURPLE
 	fill.BorderSizePixel = 0
+	fill.ZIndex = 999999
 	fill.Parent = bar
 
 	Instance.new("UICorner", fill).CornerRadius = UDim.new(1, 0)
 
 	local knob = Instance.new("Frame")
-	knob.Size = UDim2.new(0, 16, 0, 16)
-	knob.Position = UDim2.new(defaultValue / 250, -8, 0.5, -8)
+	knob.Size = UDim2.new(0, 14, 0, 14)
+	knob.Position = UDim2.new(defaultValue / 250, -7, 0.5, -7)
 	knob.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 	knob.BorderSizePixel = 0
+	knob.ZIndex = 999999
 	knob.Parent = bar
 
 	Instance.new("UICorner", knob).CornerRadius = UDim.new(1, 0)
@@ -421,7 +454,7 @@ local function createSlider(titleText, defaultValue, callback)
 		local value = math.floor(percent * 250)
 
 		fill.Size = UDim2.new(percent, 0, 1, 0)
-		knob.Position = UDim2.new(percent, -8, 0.5, -8)
+		knob.Position = UDim2.new(percent, -7, 0.5, -7)
 		box.Text = tostring(value)
 
 		callback(value)
@@ -452,7 +485,7 @@ local function createSlider(titleText, defaultValue, callback)
 
 		box.Text = tostring(value)
 		fill.Size = UDim2.new(percent, 0, 1, 0)
-		knob.Position = UDim2.new(percent, -8, 0.5, -8)
+		knob.Position = UDim2.new(percent, -7, 0.5, -7)
 
 		callback(value)
 	end)
@@ -462,39 +495,42 @@ end
 
 local function showFreezeWarning(buttonReference)
 	local popup = Instance.new("Frame")
-	popup.Size = UDim2.new(0, 420, 0, 190)
-	popup.Position = UDim2.new(0.5, -210, 0.5, -95)
+	popup.Size = UDim2.new(0, 380, 0, 175)
+	popup.Position = UDim2.new(0.5, -190, 0.5, -87)
 	popup.BackgroundColor3 = MATTE_BLACK
 	popup.BorderSizePixel = 0
+	popup.ZIndex = 999999
 	popup.Parent = gui
 
-	Instance.new("UICorner", popup).CornerRadius = UDim.new(0, 16)
+	Instance.new("UICorner", popup).CornerRadius = UDim.new(0, 14)
 
 	local warning = Instance.new("TextLabel")
-	warning.Size = UDim2.new(1, -30, 0, 105)
-	warning.Position = UDim2.new(0, 15, 0, 12)
+	warning.Size = UDim2.new(1, -30, 0, 95)
+	warning.Position = UDim2.new(0, 15, 0, 10)
 	warning.BackgroundTransparency = 1
 	warning.Text = "⚠️ WARNING ⚠️\nYou MUST have actual MM2 items in trade before using.\nAre you sure?"
 	warning.Font = FONT_BOLD
-	warning.TextSize = 15
+	warning.TextSize = 14
 	warning.TextColor3 = Color3.fromRGB(255, 220, 40)
 	warning.TextWrapped = true
+	warning.ZIndex = 999999
 	warning.Parent = popup
 
 	local yes = Instance.new("TextButton")
-	yes.Size = UDim2.new(0, 150, 0, 40)
-	yes.Position = UDim2.new(0, 45, 1, -52)
+	yes.Size = UDim2.new(0, 135, 0, 36)
+	yes.Position = UDim2.new(0, 42, 1, -48)
 	yes.BackgroundColor3 = Color3.fromRGB(45, 25, 70)
 	yes.Text = "YES"
 	yes.Font = FONT_BOLD
-	yes.TextSize = 14
+	yes.TextSize = 13
 	yes.TextColor3 = Color3.fromRGB(255, 255, 255)
+	yes.ZIndex = 999999
 	yes.Parent = popup
 
-	Instance.new("UICorner", yes).CornerRadius = UDim.new(0, 10)
+	Instance.new("UICorner", yes).CornerRadius = UDim.new(0, 9)
 
 	local no = yes:Clone()
-	no.Position = UDim2.new(1, -195, 1, -52)
+	no.Position = UDim2.new(1, -177, 1, -48)
 	no.Text = "NO"
 	no.Parent = popup
 
@@ -528,6 +564,7 @@ local function createMainToggle()
 	restoreButton.Font = FONT_BOLD
 	restoreButton.TextSize = 16
 	restoreButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+	restoreButton.ZIndex = 999999
 	restoreButton.Parent = gui
 
 	Instance.new("UICorner", restoreButton).CornerRadius = UDim.new(0, 12)
@@ -554,12 +591,12 @@ local function minimizeUI()
 end
 
 local function resizeUI()
-	if main.Size == UDim2.new(0, 620, 0, 410) then
-		currentSize = UDim2.new(0, 720, 0, 470)
-		currentPosition = UDim2.new(0.5, -360, 0.5, -235)
-	else
+	if main.Size == UDim2.new(0, 540, 0, 350) then
 		currentSize = UDim2.new(0, 620, 0, 410)
 		currentPosition = UDim2.new(0.5, -310, 0.5, -205)
+	else
+		currentSize = UDim2.new(0, 540, 0, 350)
+		currentPosition = UDim2.new(0.5, -270, 0.5, -175)
 	end
 
 	TweenService:Create(main, TweenInfo.new(0.25), {
@@ -576,27 +613,27 @@ end
 
 local function switchPage(tabName)
 	pageTitle.TextTransparency = 1
-	buttonHolder.Position = UDim2.new(0, 25, 0, 48)
+	buttonHolder.Position = UDim2.new(0, 20, 0, 40)
 
 	clearContent()
 
 	pageTitle.Text = tabName
 
 	if tabName == "Main" then
-		local shootBtn = makeButton("SHOOT MURDERER", 65)
-		shootBtn.TextSize = 16
+		local shootBtn = makeButton("SHOOT MURDERER", 50)
+		shootBtn.TextSize = 14
 		shootBtn.MouseButton1Click:Connect(function()
-			loadstring(game:HttpGet("https://raw.githubusercontent.com/universal-roblox/Mm2/refs/heads/main/Murder-Mystery-2.lua"))()
+			placeholderLoadstring("SHOOT MURDERER")
 		end)
 
-		local espBtn = makeButton("ESP", 65)
-		espBtn.TextSize = 16
+		local espBtn = makeButton("ESP", 50)
+		espBtn.TextSize = 14
 		espBtn.MouseButton1Click:Connect(function()
-			loadstring(game:HttpGet("https://pastebin.com/raw/emvEDTNB"))()
+			placeholderLoadstring("ESP")
 		end)
 
-		local spawnerBtn = makeButton("Spawner", 65)
-		spawnerBtn.TextSize = 16
+		local spawnerBtn = makeButton("Spawner (SOON)", 50)
+		spawnerBtn.TextSize = 14
 		spawnerBtn.MouseButton1Click:Connect(function()
 			placeholderLoadstring("Spawner")
 		end)
@@ -605,12 +642,12 @@ local function switchPage(tabName)
 		createSlider("WalkSpeed", savedWalkSpeed, setWalkSpeed)
 		createSlider("JumpPower", savedJumpPower, setJumpPower)
 
-		local resetBtn = makeButton("Reset Character", 52)
+		local resetBtn = makeButton("Reset Character", 44)
 		resetBtn.MouseButton1Click:Connect(resetCharacter)
 
 	elseif tabName == "Freeze Trade" then
-		local freeze = makeButton(freezeEnabled and "FREEZE : ON" or "FREEZE", 150)
-		freeze.TextSize = 28
+		local freeze = makeButton(freezeEnabled and "FREEZE : ON" or "FREEZE", 120)
+		freeze.TextSize = 24
 		freeze.TextColor3 = freezeEnabled and Color3.fromRGB(80, 255, 120) or Color3.fromRGB(255, 220, 40)
 
 		if freezeEnabled then
@@ -624,13 +661,13 @@ local function switchPage(tabName)
 		end)
 
 	elseif tabName == "Settings" then
-		local mini = makeButton("Minimize UI", 52)
+		local mini = makeButton("Minimize UI", 44)
 		mini.MouseButton1Click:Connect(minimizeUI)
 
-		local resize = makeButton("Resize UI", 52)
+		local resize = makeButton("Resize UI", 44)
 		resize.MouseButton1Click:Connect(resizeUI)
 
-		local hint = makeButton("PC Toggle Key: Q", 52)
+		local hint = makeButton("PC Toggle Key: Q", 44)
 		hint.TextColor3 = Color3.fromRGB(180, 170, 200)
 	end
 
@@ -639,33 +676,34 @@ local function switchPage(tabName)
 	}):Play()
 
 	TweenService:Create(buttonHolder, TweenInfo.new(0.25, Enum.EasingStyle.Back, Enum.EasingDirection.Out), {
-		Position = UDim2.new(0, 0, 0, 48)
+		Position = UDim2.new(0, 0, 0, 40)
 	}):Play()
 end
 
 local function makeTab(name)
 	local tab = Instance.new("TextButton")
-	tab.Size = UDim2.new(1, 0, 0, 38)
+	tab.Size = UDim2.new(1, 0, 0, 32)
 	tab.BackgroundColor3 = Color3.fromRGB(16, 13, 24)
 	tab.Text = name
 	tab.Font = FONT_BOLD
-	tab.TextSize = 12
+	tab.TextSize = 11
 	tab.TextColor3 = Color3.fromRGB(225, 215, 245)
 	tab.TextXAlignment = Enum.TextXAlignment.Left
 	tab.AutoButtonColor = false
+	tab.ZIndex = 999999
 	tab.Parent = tabHolder
 
-	Instance.new("UICorner", tab).CornerRadius = UDim.new(0, 10)
+	Instance.new("UICorner", tab).CornerRadius = UDim.new(0, 9)
 
 	local pad = Instance.new("UIPadding")
-	pad.PaddingLeft = UDim.new(0, 12)
+	pad.PaddingLeft = UDim.new(0, 10)
 	pad.Parent = tab
 
 	tab.MouseButton1Click:Connect(function()
 		if activeTab then
 			TweenService:Create(activeTab, TweenInfo.new(0.18), {
 				BackgroundColor3 = Color3.fromRGB(16, 13, 24),
-				Size = UDim2.new(1, 0, 0, 38)
+				Size = UDim2.new(1, 0, 0, 32)
 			}):Play()
 		end
 
@@ -673,7 +711,7 @@ local function makeTab(name)
 
 		TweenService:Create(tab, TweenInfo.new(0.18), {
 			BackgroundColor3 = PURPLE,
-			Size = UDim2.new(1, 0, 0, 42)
+			Size = UDim2.new(1, 0, 0, 36)
 		}):Play()
 
 		switchPage(name)
@@ -827,7 +865,7 @@ end
 
 activeTab = mainTab
 mainTab.BackgroundColor3 = PURPLE
-mainTab.Size = UDim2.new(1, 0, 0, 42)
+mainTab.Size = UDim2.new(1, 0, 0, 36)
 
 switchPage("Main")
 PlayIntro()
