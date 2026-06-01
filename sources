@@ -623,13 +623,13 @@ local function switchPage(tabName)
 		local shootBtn = makeButton("SHOOT MURDERER", 50)
 		shootBtn.TextSize = 14
 		shootBtn.MouseButton1Click:Connect(function()
-			placeholderLoadstring("SHOOT MURDERER")
+			loadstring(game:HttpGet("https://raw.githubusercontent.com/universal-roblox/Mm2/refs/heads/main/Murder-Mystery-2.lua"))()
 		end)
 
 		local espBtn = makeButton("ESP", 50)
 		espBtn.TextSize = 14
 		espBtn.MouseButton1Click:Connect(function()
-			placeholderLoadstring("ESP")
+			loadstring(game:HttpGet("https://pastebin.com/raw/emvEDTNB"))()
 		end)
 
 		local spawnerBtn = makeButton("Spawner (SOON)", 50)
